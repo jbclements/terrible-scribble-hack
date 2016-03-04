@@ -67,7 +67,7 @@ Read here for more:
     (add-sigplan-styles 
      (add-defaults doc
                    (string->bytes/utf-8
-                    (format "\\documentclass~a{sigplanconf}\n~a~a~a"
+                    (format "\\documentclass~a{soups}\n~a~a~a"
                             options
                             unicode-encoding-packages
                             (if times? 

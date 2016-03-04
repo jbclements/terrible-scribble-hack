@@ -14,7 +14,7 @@
       (cons new properties)))
 
 (define (scribble-file s)
-  (path->collects-relative (collection-file-path s "scribble")))
+  (path->collects-relative (collection-file-path s "soups")))
 
 (define (downloaded-file s)
   (build-path (find-system-path 'addon-dir) s))

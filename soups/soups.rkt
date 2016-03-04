@@ -15,7 +15,7 @@
  [subtitle
   (->* () () #:rest (listof pre-content?)
        content?)]
- [authorinfo
+ #;[authorinfo
   (-> pre-content? pre-content? pre-content?
       block?)]
  [conferenceinfo
@@ -30,7 +30,7 @@
  [exclusive-license
   (->* () ()
        block?)]
- [doi
+ #;[doi
   (->* () () #:rest (listof pre-content?)
        block?)]
  [to-appear
@@ -59,18 +59,18 @@
          (provide name ...)))
 (defopts preprint 10pt nocopyright onecolumn noqcourier notimes)
 
-(define sigplan-extras
+(define soups-extras
   (let ([abs (lambda (s)
                (path->collects-relative
                 (collection-file-path s "soups" "soups")))])
     (list
-     (make-css-addition (abs "sigplan.css"))
-     (make-tex-addition (abs "sigplan.tex")))))
+     (make-css-addition (abs "scrofulous-toad.css"))
+     (make-tex-addition (abs "soups.tex")))))
 
 ;; ----------------------------------------
 ;; Abstracts:
 
-(define abstract-style (make-style "abstract" sigplan-extras))
+(define abstract-style (make-style "abstract" soups-extras))
 
 (define (abstract . strs)
   (make-nested-flow
@@ -100,23 +100,23 @@
   ;; specially in that case:
   (author
    (make-multiarg-element
-    (make-style "SAuthorinfo" sigplan-extras)
+    (make-style "SAuthorinfo" soups-extras)
     (list
      (make-element #f (decode-content (list name)))
-     (make-element (make-style "SAuthorPlace" sigplan-extras)
+     (make-element (make-style "SAuthorPlace" soups-extras)
                    (decode-content (list affiliation)))
-     (make-element (make-style "SAuthorEmail" sigplan-extras)
+     (make-element (make-style "SAuthorEmail" soups-extras)
                    (decode-content (list e-mail)))))))
 
 (define (subtitle . str)
-  (make-element (make-style "SSubtitle" (append '(aux) sigplan-extras))
+  (make-element (make-style "SSubtitle" (append '(aux) soups-extras))
                 (decode-content str)))
 
 (define (conferenceinfo what where)
   (make-paragraph
    (make-style 'pretitle null)
    (make-multiarg-element
-    (make-style "SConferenceInfo" sigplan-extras)
+    (make-style "SConferenceInfo" soups-extras)
     (list
      (make-element #f (decode-content (list what)))
      (make-element #f (decode-content (list where)))))))
@@ -125,35 +125,35 @@
   (make-paragraph
    (make-style 'pretitle null)
    (make-element
-    (make-style "SCopyrightYear" sigplan-extras)
+    (make-style "SCopyrightYear" soups-extras)
     (decode-content when))))
 
 (define (copyrightdata . what)
   (make-paragraph
    (make-style 'pretitle null)
    (make-element
-    (make-style "SCopyrightData" sigplan-extras)
+    (make-style "SCopyrightData" soups-extras)
     (decode-content what))))
 
-(define (doi . what)
+#;(define (doi . what)
   (make-paragraph
    (make-style 'pretitle null)
    (make-element
-    (make-style "Sdoi" sigplan-extras)
+    (make-style "Sdoi" soups-extras)
     (decode-content what))))
 
 (define (exclusive-license . what)
   (make-paragraph
    (make-style 'pretitle null)
    (make-element
-    (make-style "SPexclusivelicense" sigplan-extras)
+    (make-style "SPexclusivelicense" soups-extras)
     (decode-content what))))
 
 (define (to-appear . what)
   (make-paragraph
    (make-style 'pretitle null)
    (make-element
-    (make-style "toappear" sigplan-extras)
+    (make-style "toappear" soups-extras)
     (decode-content what))))
 
 ;; ----------------------------------------
@@ -161,7 +161,7 @@
 
 (define (category sec title sub [more #f])
   (make-multiarg-element
-   (make-style (format "SCategory~a" (if more "Plus" "")) sigplan-extras)
+   (make-style (format "SCategory~a" (if more "Plus" "")) soups-extras)
    (list*
     (make-element #f (decode-content (list sec)))
     (make-element #f (decode-content (list title)))
@@ -171,7 +171,7 @@
         null))))
 
 (define (terms . str)
-  (make-element (make-style "STerms" sigplan-extras) (decode-content str)))
+  (make-element (make-style "STerms" soups-extras) (decode-content str)))
 
 (define (keywords . str)
-  (make-element (make-style "SKeywords" sigplan-extras) (decode-content str)))
+  (make-element (make-style "SKeywords" soups-extras) (decode-content str)))
